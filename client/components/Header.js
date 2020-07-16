@@ -19,7 +19,6 @@ const Header = () => {
     if (loading) return <div />;
     if (error) return `Error! ${error.message}`;
 
-    console.log(data.user);
     if (data.user) {
       return (
         <div>

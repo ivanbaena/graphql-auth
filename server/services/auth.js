@@ -89,7 +89,8 @@ function login({ email, password, req }) {
   return new Promise((resolve, reject) => {
     passport.authenticate('local', (err, user) => {
       if (!user) {
-        reject('Invalid credentials.');
+        const err = new Error('Invalid credentials.');
+        reject(err);
       }
 
       req.login(user, () => resolve(user));

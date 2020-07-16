@@ -13,7 +13,6 @@ const mutation = new GraphQLObjectType({
         password: { type: GraphQLString },
       },
       resolve(parentValue, { email, password }, req) {
-        console.log('IVAN_PW', password);
         return AuthService.signup({ email, password, req });
       },
     },

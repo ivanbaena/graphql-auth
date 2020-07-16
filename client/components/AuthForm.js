@@ -8,7 +8,6 @@ const AuthForm = ({ onSubmit, error, loading }) => {
     event.preventDefault();
     onSubmit({ email, password });
   };
-
   return (
     <div className='row'>
       <form className='col s4' onSubmit={onFormSubmit}>
@@ -27,9 +26,17 @@ const AuthForm = ({ onSubmit, error, loading }) => {
             type='password'
           />
         </div>
+        {error && (
+          <div className='errors' style={{ color: 'red' }}>
+            <pre>
+              {error.graphQLErrors.map(({ message }, i) => {
+                return <span key={i}>{message}</span>;
+              })}
+            </pre>
+          </div>
+        )}
         <button className='btn'>Submit</button>
       </form>
-      {error && <p>Error :( Please try again</p>}
     </div>
   );
 };

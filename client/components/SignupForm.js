@@ -1,19 +1,23 @@
 import React, { useEffect } from 'react';
+import AuthForm from './AuthForm';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useHistory } from 'react-router-dom';
-import AuthForm from './AuthForm';
-import mutation from '../ mutations/login';
+import mutation from '../ mutations/Signup';
 import query from '../queries/CurrentUser';
 
-const LoginForm = (props) => {
+const SignupForm = () => {
   const { loading, error, data } = useQuery(query);
   const [
-    login,
+    signup,
     { loading: mutationLoading, error: mutationError, data: mutationData },
   ] = useMutation(mutation, {
     refetchQueries: [{ query }],
   });
   const history = useHistory();
+
+  const onSubmit = ({ email, password }) => {
+    signup({ variables: { email, password } });
+  };
 
   useEffect(() => {
     if (data && data.user && data.user.email) {
@@ -22,18 +26,14 @@ const LoginForm = (props) => {
   }, [loading]);
 
   useEffect(() => {
-    if (mutationData && mutationData.login && mutationData.login.email) {
+    if (mutationData && mutationData.signup && mutationData.signup.email) {
       history.push('/dashboard');
     }
   }, [mutationLoading]);
 
-  const onSubmit = ({ email, password }) => {
-    login({ variables: { email, password } });
-  };
-
   return (
-    <div className='container'>
-      <h3>Login</h3>
+    <div>
+      <h3>signUp</h3>
       <AuthForm
         onSubmit={onSubmit}
         error={mutationError}
@@ -43,4 +43,4 @@ const LoginForm = (props) => {
   );
 };
 
-export default LoginForm;
+export default SignupForm;
