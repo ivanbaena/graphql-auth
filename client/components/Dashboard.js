@@ -10,14 +10,12 @@ const Dashboard = () => {
   if (loading) return 'Validating user';
   if (error) return `Error authorizing user`;
   if (data.user === null) {
-    console.log('what!');
-
     history.push('/signup');
   }
   return (
     <div>
       <h1>Welcome Back!</h1>
-      <p>{data.user.email}</p>
+      <p>{data && data.user && data.user.email}</p>
     </div>
   );
 };
