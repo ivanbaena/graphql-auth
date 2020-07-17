@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import AuthForm from './AuthForm';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
+
+import AuthForm from './AuthForm';
 import mutation from '../ mutations/Signup';
 import query from '../queries/CurrentUser';
 

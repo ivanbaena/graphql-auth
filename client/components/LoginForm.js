@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 import AuthForm from './AuthForm';
 import mutation from '../ mutations/login';
@@ -17,7 +17,7 @@ const LoginForm = (props) => {
 
   useEffect(() => {
     if (data && data.user && data.user.email) {
-      history.push('/dashboard');
+      history.push('/dashboard/');
     }
   }, [loading]);
 

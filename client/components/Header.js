@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery, useMutation, gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import query from '../queries/CurrentUser';
 import mutation from '../ mutations/logout';

@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { HttpLink } from 'apollo-link-http';
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import App from './components/App';
@@ -10,14 +8,23 @@ import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import Dashboard from './components/Dashboard';
 
-const link = new HttpLink({ uri: '/graphql', credentials: 'same-origin' });
 const cache = new InMemoryCache({
   dataIdFromObject: (o) => o.id,
 });
-const client = new ApolloClient({
-  connectToDevTools: true,
+const options = {
   cache,
-  link,
+  connectToDevTools: true,
+  uri: 'http://localhost:4000/graphql',
+  credentials: 'same-origin',
+  queryDeduplication: false,
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network',
+    },
+  },
+};
+const client = new ApolloClient({
+  ...options,
 });
 
 const Root = () => {
@@ -33,7 +40,7 @@ const Root = () => {
               <SignupForm />
             </Route>
             <Route path='/dashboard'>
-              <Dashboard />
+              <Dashboard client={client} />
             </Route>
           </App>
         </Route>

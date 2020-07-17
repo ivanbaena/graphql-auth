@@ -1,14 +1,25 @@
 import React, { useEffect } from 'react';
-import { useAuth } from '../hooks/useAuth';
+import { useQuery, gql } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
+import query from '../queries/CurrentUser';
 
 const Dashboard = () => {
-  const auth = useAuth();
+  const { loading, error, data } = useQuery(query);
+  const history = useHistory();
 
-  useEffect(() => {
-    console.log('dash-auth', auth);
-  }, [auth]);
+  if (loading) return 'Validating user';
+  if (error) return `Error authorizing user`;
+  if (data.user === null) {
+    console.log('what!');
 
-  return <div>Dashboard Logged Users Only!</div>;
+    history.push('/signup');
+  }
+  return (
+    <div>
+      <h1>Welcome Back!</h1>
+      <p>{data.user.email}</p>
+    </div>
+  );
 };
 
 export default Dashboard;
